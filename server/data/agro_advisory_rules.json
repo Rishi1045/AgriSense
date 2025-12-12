@@ -1,0 +1,475 @@
+{
+    "meta": {
+        "version": "1.0",
+        "generated_by": "ChatGPT",
+        "generated_at": "2025-12-12T15:27:00+05:30",
+        "description": "Generic, weather-based advisory rules engine (crop independent). Each rule has conditions, severity and recommended actions. Meant to plug into a MERN backend.",
+        "notes": "Conditions support operators: gt (greater than), lt (less than), gte, lte, between, eq. Units: temperature (°C), wind_kmph, rainfall_mm (per 24h), humidity_pct, soil_moisture_pct."
+    },
+    "severity_levels": [
+        "info",
+        "warning",
+        "alert",
+        "danger"
+    ],
+    "defaults": {
+        "evaluation_window_hours": 24,
+        "min_confidence": 0.6
+    },
+    "rules": [
+        {
+            "id": "R001",
+            "title": "Light Rain - Reduce Irrigation",
+            "conditions": [
+                {
+                    "var": "rainfall_mm",
+                    "operator": "between",
+                    "value": [
+                        1,
+                        10
+                    ]
+                }
+            ],
+            "severity": "info",
+            "actions": [
+                "reduce_irrigation_frequency",
+                "delay_fertilizer_24h",
+                "cover_equipment"
+            ],
+            "message": "Light rain expected (1-10 mm): reduce/skip scheduled irrigation, postpone fertilizer for 24 hours, protect machinery/seeds.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "CloudRain"
+        },
+        {
+            "id": "R002",
+            "title": "Moderate Rain - Stop Irrigation",
+            "conditions": [
+                {
+                    "var": "rainfall_mm",
+                    "operator": "between",
+                    "value": [
+                        10,
+                        25
+                    ]
+                }
+            ],
+            "severity": "warning",
+            "actions": [
+                "stop_irrigation",
+                "postpone_pesticide_spraying",
+                "open_drainage_channels"
+            ],
+            "message": "Moderate rain (10-25 mm): stop irrigation, postpone pesticide sprays, ensure drainage is clear.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "CloudRain"
+        },
+        {
+            "id": "R003",
+            "title": "Heavy Rain - Waterlogging Risk",
+            "conditions": [
+                {
+                    "var": "rainfall_mm",
+                    "operator": "gt",
+                    "value": 25
+                }
+            ],
+            "severity": "alert",
+            "actions": [
+                "protect_seedlings",
+                "construct_ridges_or_bunds",
+                "move_critical_inputs_to_higher_ground",
+                "stop_all_field_operations"
+            ],
+            "message": "Heavy rain (>25 mm): risk of waterlogging. Clear drains, protect young plants, avoid field operations.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "CloudLightning"
+        },
+        {
+            "id": "R004",
+            "title": "Very Heavy Rain / Flood",
+            "conditions": [
+                {
+                    "var": "rainfall_48h_mm",
+                    "operator": "gt",
+                    "value": 75
+                }
+            ],
+            "severity": "danger",
+            "actions": [
+                "evacuate_livestock",
+                "store_seeds_fodder_tools_on_raised_platforms",
+                "suspend_sowing_transplanting"
+            ],
+            "message": "Very heavy rainfall / flood warning: move animals and inputs to safety. Avoid sowing/transplanting.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "Warning"
+        },
+        {
+            "id": "R005",
+            "title": "Heatwave - Increase Irrigation & Shade",
+            "conditions": [
+                {
+                    "var": "temperature_c",
+                    "operator": "gt",
+                    "value": 35
+                }
+            ],
+            "severity": "warning",
+            "actions": [
+                "increase_irrigation_morn_eve",
+                "apply_mulch",
+                "use_shade_nurseries",
+                "provide_cool_water_to_livestock"
+            ],
+            "message": "High temperatures (>35°C): irrigate in morning/evening, mulching recommended, provide shade for nurseries and livestock.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "ThermometerHot"
+        },
+        {
+            "id": "R006",
+            "title": "Extreme Heat - Immediate Action",
+            "conditions": [
+                {
+                    "var": "temperature_c",
+                    "operator": "gt",
+                    "value": 40
+                }
+            ],
+            "severity": "alert",
+            "actions": [
+                "emergency_irrigation",
+                "suspend_chemical_application",
+                "increase_livestock_cooling"
+            ],
+            "message": "Extreme heat (>40°C): provide emergency irrigation, avoid fertilizer/pesticide application, protect livestock.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "ThermometerHot"
+        },
+        {
+            "id": "R007",
+            "title": "Cold Wave - Frost Protection",
+            "conditions": [
+                {
+                    "var": "temperature_c",
+                    "operator": "lt",
+                    "value": 8
+                }
+            ],
+            "severity": "warning",
+            "actions": [
+                "light_irrigation_for_frost_reduction",
+                "cover_nurseries_with_sheets",
+                "protect_livestock_bedding"
+            ],
+            "message": "Cold conditions (<8°C): use light irrigation to reduce frost damage, cover nurseries, keep animals warm.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "Snowflake"
+        },
+        {
+            "id": "R008",
+            "title": "High Wind - Avoid Spraying",
+            "conditions": [
+                {
+                    "var": "wind_kmph",
+                    "operator": "gt",
+                    "value": 15
+                }
+            ],
+            "severity": "info",
+            "actions": [
+                "avoid_spraying",
+                "postpone_aerial_operations"
+            ],
+            "message": "Wind >15 km/h: avoid pesticide/fertilizer spraying to reduce drift.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "Wind"
+        },
+        {
+            "id": "R009",
+            "title": "Strong Wind - Stake Tall Crops",
+            "conditions": [
+                {
+                    "var": "wind_kmph",
+                    "operator": "gt",
+                    "value": 25
+                }
+            ],
+            "severity": "warning",
+            "actions": [
+                "stake_tall_crops",
+                "secure_greenhouses",
+                "secure_shade_nets"
+            ],
+            "message": "Strong wind (>25 km/h): support tall crops, secure structures and nets.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "Wind"
+        },
+        {
+            "id": "R010",
+            "title": "Storm Warning - Move Livestock",
+            "conditions": [
+                {
+                    "var": "wind_kmph",
+                    "operator": "gt",
+                    "value": 40
+                }
+            ],
+            "severity": "danger",
+            "actions": [
+                "move_livestock_to_shelter",
+                "secure_equipment",
+                "suspend_field_work"
+            ],
+            "message": "Very strong winds / storm conditions (>40 km/h): move animals to safe sheds and suspend fieldwork.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "Warning"
+        },
+        {
+            "id": "R011",
+            "title": "High Humidity - Fungal Risk",
+            "conditions": [
+                {
+                    "var": "humidity_pct",
+                    "operator": "gt",
+                    "value": 70
+                }
+            ],
+            "severity": "warning",
+            "actions": [
+                "inspect_for_fungal_signs",
+                "improve_ventilation_in_polyhouses",
+                "plan_fungicide_based_on_monitoring"
+            ],
+            "message": "Humidity >70% increases fungal disease risk. Inspect fields and improve ventilation where possible.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "Drop"
+        },
+        {
+            "id": "R012",
+            "title": "Low Humidity - Increase Irrigation",
+            "conditions": [
+                {
+                    "var": "humidity_pct",
+                    "operator": "lt",
+                    "value": 30
+                }
+            ],
+            "severity": "info",
+            "actions": [
+                "increase_irrigation_frequency",
+                "apply_mulch_to_conserve_moisture"
+            ],
+            "message": "Low humidity (<30%): increase irrigation frequency and use mulches to conserve moisture.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "Drop"
+        },
+        {
+            "id": "R013",
+            "title": "Fog / Low Visibility - Delay Operations",
+            "conditions": [
+                {
+                    "var": "visibility_km",
+                    "operator": "lt",
+                    "value": 1
+                }
+            ],
+            "severity": "info",
+            "actions": [
+                "delay_irrigation_if_possible",
+                "avoid_spraying",
+                "keep_animals_indoor"
+            ],
+            "message": "Heavy fog (visibility <1 km): delay spraying and non-essential operations; keep animals indoors.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "CloudFog"
+        },
+        {
+            "id": "R014",
+            "title": "Thunderstorm / Lightning - Safety",
+            "conditions": [
+                {
+                    "var": "prob_thunderstorm",
+                    "operator": "gte",
+                    "value": 0.5
+                }
+            ],
+            "severity": "danger",
+            "actions": [
+                "do_not_work_in_open_fields",
+                "disconnect_electrical_equipment",
+                "shelter_livestock"
+            ],
+            "message": "High chance of thunderstorm/lightning: avoid open-field work and shelter animals and people.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "Lightning"
+        },
+        {
+            "id": "R015",
+            "title": "Pest/Disease Risk After Continuous Rain",
+            "conditions": [
+                {
+                    "var": "consecutive_rain_days",
+                    "operator": "gte",
+                    "value": 2
+                }
+            ],
+            "severity": "alert",
+            "actions": [
+                "increase_field_monitoring",
+                "remove_diseased_plants",
+                "use_traps_and_threshold_based_responses"
+            ],
+            "message": "2+ consecutive rainy days: heightened pest and disease risk — inspect crops and remove infected material.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "Bug"
+        },
+        {
+            "id": "R016",
+            "title": "Soil Too Dry - Recommend Micro-Irrigation",
+            "conditions": [
+                {
+                    "var": "soil_moisture_pct",
+                    "operator": "lt",
+                    "value": 25
+                }
+            ],
+            "severity": "warning",
+            "actions": [
+                "recommend_micro_irrigation",
+                "apply_mulch",
+                "avoid_tilling_dry_soil"
+            ],
+            "message": "Soil moisture low (<25%): recommend micro-irrigation, mulching, and avoid tilling dry soil.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "Plant"
+        },
+        {
+            "id": "R017",
+            "title": "Soil Waterlogged - Stop Irrigation",
+            "conditions": [
+                {
+                    "var": "soil_moisture_pct",
+                    "operator": "gt",
+                    "value": 85
+                }
+            ],
+            "severity": "alert",
+            "actions": [
+                "stop_irrigation",
+                "improve_drainage",
+                "avoid_field_operations"
+            ],
+            "message": "Soil moisture very high (>85%): stop irrigation and improve drainage to prevent root damage.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "DropHalfBottom"
+        },
+        {
+            "id": "R018",
+            "title": "Post-Rain Spraying Advisory",
+            "conditions": [
+                {
+                    "var": "rain_expected_within_hours",
+                    "operator": "lte",
+                    "value": 24
+                }
+            ],
+            "severity": "info",
+            "actions": [
+                "avoid_spraying_before_rain",
+                "reschedule_pesticide_application"
+            ],
+            "message": "Rain expected within 24 hours: avoid spraying; reschedule to ensure effectiveness.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "Umbrella"
+        },
+        {
+            "id": "R019",
+            "title": "Market Advisory - Heavy Rain Predicted",
+            "conditions": [
+                {
+                    "var": "rainfall_mm",
+                    "operator": "gt",
+                    "value": 25
+                },
+                {
+                    "var": "days_to_harvest",
+                    "operator": "lte",
+                    "value": 7
+                }
+            ],
+            "severity": "warning",
+            "actions": [
+                "consider_harvest_early_if_safe",
+                "protect_harvested_crops"
+            ],
+            "message": "Heavy rain near harvest (<=7 days): consider early harvest or protect produce to avoid losses.",
+            "applicable_to": [
+                "all"
+            ],
+            "icon": "ShoppingBag"
+        },
+        {
+            "id": "R020",
+            "title": "Livestock Heat Stress",
+            "conditions": [
+                {
+                    "var": "temperature_c",
+                    "operator": "gt",
+                    "value": 35
+                },
+                {
+                    "var": "humidity_pct",
+                    "operator": "gt",
+                    "value": 60
+                }
+            ],
+            "severity": "alert",
+            "actions": [
+                "increase_drinking_water_frequency",
+                "provide_shade_and_ventilation",
+                "monitor_for_heat_stress_signs"
+            ],
+            "message": "High temp + humidity: livestock heat stress risk. Ensure water, shade and ventilation.",
+            "applicable_to": [
+                "livestock"
+            ],
+            "icon": "PawPrint"
+        }
+    ]
+}
