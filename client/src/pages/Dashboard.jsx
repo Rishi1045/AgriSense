@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as Icons from '@phosphor-icons/react';
 import { jsPDF } from 'jspdf';
 import GlassCard from '../components/ui/GlassCard';
@@ -14,9 +14,21 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const advisoryRef = useRef(null);
+
     useEffect(() => {
         loadHistory();
     }, []);
+
+    // Auto-scroll to advisories on mobile when data loads
+    useEffect(() => {
+        if (weatherData && window.innerWidth < 1024) {
+            // Small timeout to ensure DOM is updated
+            setTimeout(() => {
+                advisoryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+        }
+    }, [weatherData]);
 
     const loadHistory = async () => {
         try {
@@ -59,8 +71,8 @@ const Dashboard = () => {
         // Date & Location
         doc.setFontSize(12);
         doc.setTextColor(100);
-        doc.text(`Location: ${weatherData.weather.name}, ${weatherData.weather.sys.country}`, 20, 30);
-        doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 36);
+        doc.text(`Location: ${weatherData.weather.name}, ${weatherData.weather.sys.country} `, 20, 30);
+        doc.text(`Date: ${new Date().toLocaleDateString()} `, 20, 36);
 
         // Weather Metrics
         doc.setFontSize(14);
@@ -69,9 +81,9 @@ const Dashboard = () => {
 
         doc.setFontSize(12);
         doc.text(`Temperature: ${weatherData.weather.main.temp}°C`, 20, 60);
-        doc.text(`Condition: ${weatherData.weather.weather[0].main}`, 20, 66);
-        doc.text(`Humidity: ${weatherData.weather.main.humidity}%`, 20, 72);
-        doc.text(`Wind Speed: ${weatherData.weather.wind.speed} m/s`, 20, 78);
+        doc.text(`Condition: ${weatherData.weather.weather[0].main} `, 20, 66);
+        doc.text(`Humidity: ${weatherData.weather.main.humidity}% `, 20, 72);
+        doc.text(`Wind Speed: ${weatherData.weather.wind.speed} m / s`, 20, 78);
 
         // Advisories
         doc.setFontSize(14);
@@ -82,7 +94,7 @@ const Dashboard = () => {
         weatherData.advisories.forEach((advisory, index) => {
             doc.setFontSize(12);
             doc.setFont("helvetica", "bold");
-            doc.text(`${index + 1}. ${advisory.title}`, 20, yPos);
+            doc.text(`${index + 1}. ${advisory.title} `, 20, yPos);
             yPos += 6;
             doc.setFont("helvetica", "normal");
             doc.text(advisory.message, 20, yPos);
@@ -234,9 +246,9 @@ const Dashboard = () => {
                 </div>
 
                 {/* Right Column: Advisories & History */}
-                <div className="space-y-6">
+                <div className="space-y-6" ref={advisoryRef}>
                     {/* Advisories */}
-                    <GlassCard className={`animate-fade-in ${!weatherData ? 'opacity-50 pointer-events-none grayscale' : ''}`}>
+                    <GlassCard className={`animate - fade -in ${!weatherData ? 'opacity-50 pointer-events-none grayscale' : ''} `}>
                         <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
                             <h3 className="text-lg font-heading font-bold text-slate-800 flex items-center gap-2">
                                 <Icons.Megaphone size={20} weight="fill" className="text-primary" />
