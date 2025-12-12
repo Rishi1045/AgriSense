@@ -26,7 +26,7 @@ const Dashboard = () => {
             // Small timeout to ensure DOM is updated
             setTimeout(() => {
                 advisoryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 4000);
+            }, 3500);
         }
     }, [weatherData]);
 
