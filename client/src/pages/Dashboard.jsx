@@ -174,7 +174,7 @@ const Dashboard = () => {
                                     <div>
                                         <h2 className="text-2xl font-heading font-bold text-slate-800 mb-2">Ready to explore?</h2>
                                         <p className="text-slate-500 text-base leading-relaxed max-w-md">
-                                            Enter a city above to get real-time weather, forecasts, and AI-powered farming advisories tailored to your location.
+                                            Enter a city above to get real-time weather, forecasts and farming advisories tailored to your location.
                                         </p>
                                     </div>
                                 </div>
