@@ -1,6 +1,6 @@
 # 🌱 AgriSense - Smart Weather & Farming Advisory
 
-**AgriSense** is a modern, full-stack web application designed to empower farmers with real-time weather data and actionable, AI-driven agronomic advisories. It features a premium, responsive UI and generates downloadable PDF reports for offline use.
+**AgriSense** is a modern, full-stack web application designed to empower farmers with real-time weather data and actionable. It features a premium, responsive UI and generates downloadable PDF reports for offline use.
 
 ---
 
