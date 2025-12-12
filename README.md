@@ -119,9 +119,11 @@ AgriSense/
 
 ## 🤝 Contributing
 Contributions are welcome! Please fork the repository and submit a pull request.
-
-<img width="1440" height="809" alt="Screenshot 2025-12-12 at 11 07 20 PM" src="https://github.com/user-attachments/assets/2cb61b49-ac13-4062-9969-0f71c81bd9d1" />
+<br><br>
+<img width="1440" height="635" alt="Screenshot 2025-12-12 at 11 05 06 PM" src="https://github.com/user-attachments/assets/f61d76a9-5ed5-4af5-90e0-635fd529a9ce" />
 <br><br>
 <img width="1440" height="813" alt="Screenshot 2025-12-12 at 11 05 55 PM" src="https://github.com/user-attachments/assets/3fbb51e4-18ca-47cf-a6f4-2b8617bd6792" />
 <br><br>
-<img width="1440" height="635" alt="Screenshot 2025-12-12 at 11 05 06 PM" src="https://github.com/user-attachments/assets/f61d76a9-5ed5-4af5-90e0-635fd529a9ce" />
+<img width="1440" height="809" alt="Screenshot 2025-12-12 at 11 07 20 PM" src="https://github.com/user-attachments/assets/2cb61b49-ac13-4062-9969-0f71c81bd9d1" />
+<br><br>
+https://github.com/user-attachments/assets/d5c09782-3bcc-455f-8a02-ba9448af7cbc
